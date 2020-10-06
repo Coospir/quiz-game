@@ -36,6 +36,7 @@ class Quiz extends Component {
     const question = this.state.quiz[this.state.activeQuestion]
 
     if(question.rightAnswerId === answerId ) {
+        console.log("right")
 
         this.setState({
             answerState: {
@@ -56,8 +57,11 @@ class Quiz extends Component {
 
          
     } else {
+        console.log("wrong")
         this.setState({
-            [answerId]: 'error'
+            answerState: {
+                [answerId] : 'error'
+            }
         })
     }
     
