@@ -5,6 +5,7 @@ import classes from './Quiz.module.css'
 class Quiz extends Component {
     state = {
         activeQuestion: 0,
+        çanswerState: null,
         quiz: [
             {
                 id: 1,
@@ -32,9 +33,38 @@ class Quiz extends Component {
     }
 
     onAnswerClickHandler = answerId => {
+    const question = this.state.quiz[this.state.activeQuestion]
+
+    if(question.rightAnswerId === answerId ) {
+
         this.setState({
-            activeQuestion: this.state.activeQuestion + 1
+            answerState: {
+                [answerId] : 'success'
+            }
         })
+
+        const timeout = window.setTimeout(() => {
+            if (this.isQuizFinished()) {
+                console.log('finished')
+            } else {
+                this.setState({
+                    activeQuestion: this.state.activeQuestion + 1
+                })
+            }
+            window.clearTimeout(timeout)
+        }, 1000)
+
+         
+    } else {
+        this.setState({
+            [answerId]: 'error'
+        })
+    }
+    
+    }
+
+    isQuizFinished() {
+        return this.state.activeQuestion + 1 === this.state.quiz.length
     }
 
     render() {
@@ -47,7 +77,8 @@ class Quiz extends Component {
                     question={this.state.quiz[this.state.activeQuestion].question}
                     onAnswerClick={this.onAnswerClickHandler}
                     quizLength={this.state.quiz.length}
-                    answerNumber={this.state.activeQuestion + 1} />
+                    answerNumber={this.state.activeQuestion + 1}
+                    state={this.state.answerState} />
                 </div>
             </div>
         )
