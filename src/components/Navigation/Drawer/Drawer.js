@@ -1,9 +1,28 @@
 import React, { Component } from 'react'
 import Backdrop from '../../UI/Backdrop/Backdrop'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 import classes from './Drawer.module.css'
 
 const links = [
-    'Главная',  'Тесты', 'Профиль'
+    {
+        link: 'Главная',
+        href: '/'
+    },
+         
+    {
+        link: 'Тестирование',
+        href: '/quizes'
+    },
+
+    {
+        link: 'Аккаунт',
+        href: '/account'
+    }
 ]
 
 class Drawer extends Component {
@@ -12,7 +31,19 @@ class Drawer extends Component {
         return (
             links.map((link, index) => {
                 return (
-                    <li key={index}><a href="http:/localhost:3000">{link}</a></li>
+                    <>
+                    <li key={index}>
+                        <Link to={link.href}>{link.link}</Link>
+                    </li>
+                    <Switch>
+                      <Route
+                        key={index}
+                        path={link.href}
+                        exact={true}
+                        children={link.link}
+                      />
+                  </Switch>
+                  </>
                 )
             })
         )
@@ -24,14 +55,14 @@ class Drawer extends Component {
             cls.push(classes.close)
         }
         return(
-            <>
+            <Router>
             <nav className={cls.join(' ')}>
                 <ul>
                     { this.renderLinks() }
                 </ul>
             </nav>
-            { this.props.isOpen ? <Backdrop /> : null }
-            </>
+            { this.props.isOpen ? <Backdrop onClick={this.props.onClose}/> : null }
+            </Router>
         )
     }
 }
