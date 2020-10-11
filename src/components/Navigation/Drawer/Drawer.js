@@ -24,11 +24,14 @@ class Drawer extends Component {
             cls.push(classes.close)
         }
         return(
+            <>
             <nav className={cls.join(' ')}>
                 <ul>
                     { this.renderLinks() }
                 </ul>
             </nav>
+            { this.props.isOpen ? <Backdrop /> : null }
+            </>
         )
     }
 }
