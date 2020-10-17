@@ -7,6 +7,7 @@ class App extends Component {
     return (
       <Layout>
         <Quiz />
+        <Quiz />
       </Layout>
     );
   }
